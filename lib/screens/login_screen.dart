@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.only(top: 16),
                 child: Column(
                   children: [
+                    Icon(Icons.school, size: 64, color: Color(0xFF2C7DA0)),
+                    SizedBox(height: 16),
                     Text(
                       'Learnify',
                       style: Theme.of(context).textTheme.displayMedium!
