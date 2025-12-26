@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Help?',
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.blue,
+                          color: Colors.grey,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -237,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialCircle(Icons.alternate_email, Colors.blue),
+                      _buildSocialCircle(Icons.alternate_email, Colors.blueAccent),
                       _buildSocialCircle(Icons.link, Colors.blueAccent),
                       _buildSocialCircle(Icons.facebook, Colors.blueAccent),
                       _buildSocialCircle(Icons.g_mobiledata, Colors.blueAccent),

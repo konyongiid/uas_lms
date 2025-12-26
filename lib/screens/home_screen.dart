@@ -383,7 +383,7 @@ class HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  'PENGUMUMAN | Workshop Desin UI/UX',
+                  'PENGUMUMAN | Workshop Design UI/UX',
                   style: TextStyle(color: white, fontWeight: FontWeight.bold),
                 ),
                 Text(

@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: Color(0xFFB9E3F2),
+      backgroundColor: Color.fromARGB(255, 222, 241, 248),
       body: Center(
         child: Text(
           'Learnify',
