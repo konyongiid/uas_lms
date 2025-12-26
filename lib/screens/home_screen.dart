@@ -100,7 +100,7 @@ class HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: primaryDark,
+                  color: const Color.fromRGBO(26, 74, 122, 1),
                 ),
               ),
             ),
