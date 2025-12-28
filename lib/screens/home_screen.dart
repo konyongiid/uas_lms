@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'profile/profile_screen.dart'; 
-import 'announcement/announcement_screen.dart'; // Pastikan file ini sudah ada di folder tersebut
-import 'course_list_screen.dart'; // File baru untuk list mata kuliah ke bawah
+import 'announcement/announcement_screen.dart'; 
+import 'course_list_screen.dart'; 
 
 // Konstanta warna sesuai tema aplikasi Anda
 const Color primaryDark = Color(0xFF1A4A7A);
@@ -21,16 +21,14 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // List halaman untuk navigasi BottomNavigationBar
     final List<Widget> pages = [
-      _buildHomeBody(),         // Index 0: Dashboard Utama
-      const CourseListScreen(), // Index 1: List Mata Kuliah (List ke bawah)
-      _buildNotificationBody(), // Index 2: Notifikasi (Berdasarkan gambar agfa.png)
+      _buildHomeBody(),         
+      const CourseListScreen(), 
+      _buildNotificationBody(), 
     ];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      // AppBar hanya tampil di Dashboard Utama
       appBar: _currentIndex == 0 ? _buildAppBar() : null,
       body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -49,7 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- 1. WIDGET APPBAR HOME ---
+  // --- MODIFIKASI APPBAR: EFEK PADA BOX MAHASISWA ---
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       backgroundColor: primaryBlue,
@@ -66,21 +64,31 @@ class HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: Center(
-            child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen())),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: primaryBlue,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: white.withOpacity(0.5)),
-                ),
-                child: Row(
-                  children: const [
-                    Text('MAHASISWA', style: TextStyle(color: white, fontSize: 10, fontWeight: FontWeight.bold)),
-                    SizedBox(width: 8),
-                    CircleAvatar(radius: 12, backgroundColor: white, child: Icon(Icons.person, size: 16, color: primaryBlue)),
-                  ],
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+                },
+                borderRadius: BorderRadius.circular(20), // Menyesuaikan bentuk box
+                child: Ink(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: primaryBlue,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: white.withOpacity(0.5)),
+                  ),
+                  child: Row(
+                    children: const [
+                      Text('MAHASISWA', style: TextStyle(color: white, fontSize: 10, fontWeight: FontWeight.bold)),
+                      SizedBox(width: 8),
+                      CircleAvatar(
+                        radius: 12, 
+                        backgroundColor: white, 
+                        child: Icon(Icons.person, size: 16, color: primaryBlue)
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -90,7 +98,6 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- 2. WIDGET BODY HOME (DASHBOARD) ---
   Widget _buildHomeBody() {
     return SingleChildScrollView(
       child: Column(
@@ -102,7 +109,6 @@ class HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
             child: Text('Progres Mata Kuliah', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryDark)),
           ),
-          // Grid tampilan ringkas di halaman depan
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: GridView.count(
@@ -124,7 +130,59 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- 3. WIDGET BODY NOTIFIKASI (SESUAI GAMBAR agfa.png) ---
+  Widget _buildAnnouncementSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Pengumuman Terakhir', 
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryDark)
+          ),
+          const SizedBox(height: 8),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const AnnouncementScreen()));
+              },
+              borderRadius: BorderRadius.circular(16),
+              child: Ink(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: primaryDark, 
+                  borderRadius: BorderRadius.circular(16), 
+                  image: const DecorationImage(
+                    image: NetworkImage('https://via.placeholder.com/400x120'), 
+                    fit: BoxFit.cover, 
+                    opacity: 0.3
+                  )
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  children: const [
+                    Text(
+                      'PENGUMUMAN | Workshop Design UI/UX', 
+                      style: TextStyle(color: white, fontWeight: FontWeight.bold)
+                    ),
+                    Text(
+                      '15/01/2026', 
+                      style: TextStyle(color: Colors.white70, fontSize: 12)
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // --- WIDGET LAINNYA ---
   Widget _buildNotificationBody() {
     return Column(
       children: [
@@ -162,7 +220,7 @@ class HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Anda telah mengirimkan pengajuan tugas untuk Pengumpulan Laporan Akhir Assessment 3 (Tugas Besar)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                const Text('Anda telah mengirimkan pengajuan tugas untuk Laporan Akhir...', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 4),
                 Text('3 Hari 9 Jam Yang Lalu', style: TextStyle(fontSize: 11, color: Colors.grey[600])),
               ],
@@ -173,37 +231,6 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- 4. SECTION PENGUMUMAN (NAVIGASI KE kjsfs.png) ---
-  Widget _buildAnnouncementSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Pengumuman Terakhir', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryDark)),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AnnouncementScreen()));
-                },
-                child: const Text('Lihat Semua', style: TextStyle(color: primaryBlue, fontSize: 14, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            height: 100, width: double.infinity,
-            decoration: BoxDecoration(color: primaryDark, borderRadius: BorderRadius.circular(16), image: const DecorationImage(image: NetworkImage('https://via.placeholder.com/400x120'), fit: BoxFit.cover, opacity: 0.3)),
-            padding: const EdgeInsets.all(16),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: const [Text('PENGUMUMAN | Workshop Design UI/UX', style: TextStyle(color: white, fontWeight: FontWeight.bold)), Text('15/01/2026', style: TextStyle(color: Colors.white70, fontSize: 12))]),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // --- HELPER UNTUK GRID DI HALAMAN DEPAN ---
   Widget _buildCourseGridItem(String code, String title, double progress, Color iconBgColor, IconData iconData) {
     return Container(
       padding: const EdgeInsets.all(10),
