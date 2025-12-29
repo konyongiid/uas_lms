@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Learnify LMS',
+      title: 'Learnify',
       theme: learnifyTheme,
       initialRoute: '/',
       routes: {

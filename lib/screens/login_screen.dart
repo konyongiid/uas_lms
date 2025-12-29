@@ -163,51 +163,68 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
 
                   // --- BUTTON LOGIN ---
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushReplacementNamed(context, '/home'),
-                    child: Container(
-                      width: double.infinity,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: primaryColor, // Tombol sekarang berwarna Primary
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: primaryColor.withOpacity(0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                  // --- BUTTON LOGIN ---
+                  Material(
+                    color: Colors
+                        .transparent, // Agar tidak menutupi warna container
+                    child: InkWell(
+                      onTap: () =>
+                          Navigator.pushReplacementNamed(context, '/home'),
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ), // Efek ripple mengikuti bentuk tombol
+                      splashColor: Colors.white.withOpacity(
+                        0.3,
+                      ), // Warna ombak sentuhan
+                      child: Ink(
+                        width: double.infinity,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withOpacity(0.3),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
 
-                  // --- SIGN UP TEXT ---
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Help?',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  // --- HELP BUTTON ---
+                  TextButton(
+                    onPressed: () {
+                      // Logika jika tombol help ditekan
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.grey, // Warna teks
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                    ],
+                    ),
+                    child: const Text(
+                      'Help?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
 
                   const SizedBox(height: 30),
@@ -237,7 +254,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialCircle(Icons.alternate_email, Colors.blueAccent),
+                      _buildSocialCircle(
+                        Icons.alternate_email,
+                        Colors.blueAccent,
+                      ),
                       _buildSocialCircle(Icons.link, Colors.blueAccent),
                       _buildSocialCircle(Icons.facebook, Colors.blueAccent),
                       _buildSocialCircle(Icons.g_mobiledata, Colors.blueAccent),

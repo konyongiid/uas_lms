@@ -183,13 +183,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Tambahkan logika logout di sini
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.logout, color: Colors.red),
+            icon: const Icon(Icons.logout, color: Color(0xFF1A4A7A)),
             label: const Text(
               "Log Out",
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Color(0xFF1A4A7A),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.red),
+              side: const BorderSide(color: Color(0xFF1A4A7A)),
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
