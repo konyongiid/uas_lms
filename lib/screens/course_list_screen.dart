@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+// Import file sesuai dengan struktur folder Anda
+import 'course_quis.dart/detail_materi_page2.dart';
+import 'course_quis.dart/materi_detail_sheet.dart';
 
-// Menggunakan konstanta warna yang sama dengan home_screen.dart
-const Color primaryDark = Color(0xFF1A4A7A);
-const Color primaryBlue = Color(0xFF4285F4);
-const Color mediumGray = Color(0xFF757575);
+const Color primaryRed = Color(0xFF1A4A7A);
+const Color secondaryBlue = Color(0xFF5AA9E6);
+const Color backgroundGray = Color(0xFFF0F0F0);
 const Color white = Colors.white;
 
 class CourseListScreen extends StatelessWidget {
@@ -11,100 +13,301 @@ class CourseListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        title: const Text(
-          'Mata Kuliah Saya',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: backgroundGray,
+        body: Column(
+          children: [
+            // Header
+            Container(
+              padding: const EdgeInsets.only(
+                top: 50,
+                bottom: 0,
+                left: 20,
+                right: 20,
+              ),
+              width: double.infinity,
+              decoration: const BoxDecoration(color: primaryRed),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.arrow_back, color: Colors.white),
+                      const SizedBox(width: 15),
+                      const Expanded(
+                        child: Text(
+                          'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA D4SM-42-03 [ADY]',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                    child: const TabBar(
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: Colors.black,
+                      indicatorWeight: 3,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: [
+                        Tab(text: "Materi"),
+                        Tab(text: "Tugas Dan Kuis"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Konten Tab View
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // --- TAB 1: MATERI ---
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      // KARTU 1: Membuka MateriDetailSheet
+                      _buildMeetingCard(
+                        'Pertemuan 1',
+                        '01 - Pengantar User Interface Design',
+                        '3 URLs, 2 Files, 2 Interactive Content',
+                        false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => const MateriDetailSheet(
+                              title: '01 - Pengantar User Interface Design',
+                            ),
+                          );
+                        },
+                      ),
+
+                      // KARTU 2: Membuka DetailMateriPage2
+                      _buildMeetingCard(
+                        'Pertemuan 2',
+                        '02 - Konsep User Interface Design',
+                        '2 URLs, 1 File',
+                        false,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailMateriPage(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      // Kartu lainnya tetap tampil di dalam ListView yang sama
+                      _buildMeetingCard(
+                        'Pertemuan 3',
+                        '03 - Interaksi pada UI',
+                        '3 URLs, 2 Files',
+                        true,
+                      ),
+                      _buildMeetingCard(
+                        'Pertemuan 4',
+                        '04 - Ethnographic Observation',
+                        '3 URLs, 2 Files',
+                        true,
+                      ),
+                      _buildMeetingCard(
+                        'Pertemuan 5',
+                        '05 - UID Testing',
+                        '3 URLs, 2 Files',
+                        true,
+                      ),
+                      _buildMeetingCard(
+                        'Pertemuan 6',
+                        '06 - Assessment 1',
+                        '3 URLs, 2 Files',
+                        true,
+                      ),
+                    ],
+                  ),
+
+                  // --- TAB 2: TUGAS DAN KUIS ---
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      _buildAssignmentCard(
+                        'Quiz',
+                        'Quiz Review D1',
+                        '10 Feb 2026',
+                        Icons.quiz_outlined,
+                        true,
+                      ),
+                      _buildAssignmentCard(
+                        'Tugas',
+                        'Tugas 01 - UID Android',
+                        '26 Feb 2026',
+                        Icons.edit_note,
+                        false,
+                      ),
+                      _buildAssignmentCard(
+                        'Pertemuan 3',
+                        'Kuis - Assessment 2',
+                        '28 Feb 2026',
+                        Icons.quiz_outlined,
+                        true,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          _buildCourseListItem('UIUX', 'DESIGN ANTARMUKA', 0.8, Colors.orange, Icons.palette),
-          _buildCourseListItem('DESIGN', 'COLOR PALLET', 0.7, Colors.cyan, Icons.grid_view_rounded),
-          _buildCourseListItem('Kewarganegraan', 'PENDIDIKAN KEWARNEGARAAN', 0.5, Colors.red, Icons.account_balance),
-          _buildCourseListItem('Sistem Operasi', 'Belajar Membaca', 0.2, Colors.blue, Icons.storage),
-          _buildCourseListItem('Bahasa Inggris', 'Grammar', 0.5, Colors.blueGrey, Icons.settings_input_component),
-          _buildCourseListItem('Mobile Apps', 'dart brain', 0.3, Colors.teal, Icons.business_center),
-        ],
       ),
     );
   }
 
-  Widget _buildCourseListItem(String code, String title, double progress, Color iconBgColor, IconData iconData) {
+  // Widget kartu Materi (DITAMBAHKAN GestureDetector & onTap)
+  Widget _buildMeetingCard(
+    String label,
+    String title,
+    String subtitle,
+    bool isCompleted, {
+    VoidCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: secondaryBlue,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      color: white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.check_circle,
+                  color: isCompleted ? Colors.green : Colors.grey[300],
+                  size: 22,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              subtitle,
+              style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget kartu Tugas
+  Widget _buildAssignmentCard(
+    String tag,
+    String title,
+    String deadline,
+    IconData icon,
+    bool isDone,
+  ) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          )
-        ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Ikon Mata Kuliah
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: iconBgColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(iconData, color: white, size: 28),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: secondaryBlue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  tag,
+                  style: const TextStyle(color: white, fontSize: 10),
+                ),
+              ),
+              Icon(
+                Icons.check_circle,
+                color: isDone ? Colors.green : Colors.grey[300],
+                size: 22,
+              ),
+            ],
           ),
-          const SizedBox(width: 16),
-          // Info Mata Kuliah & Progres
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  code,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-                Text(
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Icon(icon, size: 40, color: Colors.black87),
+              const SizedBox(width: 15),
+              Expanded(
+                child: Text(
                   title,
-                  style: const TextStyle(fontSize: 12, color: mediumGray),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(height: 10),
-                // Progress Bar
-                Row(
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: LinearProgressIndicator(
-                          value: progress,
-                          backgroundColor: Colors.grey[200],
-                          valueColor: const AlwaysStoppedAnimation<Color>(primaryBlue),
-                          minHeight: 6,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      '${(progress * 100).toInt()}%',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: primaryBlue,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Text(
+            'Tenggat Waktu : $deadline',
+            style: TextStyle(fontSize: 11, color: Colors.grey[400]),
           ),
         ],
       ),
