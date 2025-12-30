@@ -11,15 +11,15 @@ class MaterialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
       ),
       child: ListTile(
         leading: Icon(icon, color: Colors.grey[700]),
-        title: Text(title, style: TextStyle(fontSize: 14)),
+        title: Text(title, style: const TextStyle(fontSize: 14)),
         trailing: Icon(
           isDone ? Icons.check_circle : Icons.radio_button_unchecked,
           color: isDone ? Colors.green : Colors.grey,
@@ -35,48 +35,61 @@ class TaskCard extends StatelessWidget {
   final String desc;
   final IconData icon;
   final bool isDone;
+  final VoidCallback? onTap; // Parameter untuk fungsi klik
 
-  TaskCard({required this.title, required this.desc, required this.icon, this.isDone = false});
+  TaskCard({
+    required this.title, 
+    required this.desc, 
+    required this.icon, 
+    this.isDone = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 30, color: Colors.grey[600]),
-          SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-                    Icon(
-                      isDone ? Icons.check_circle : Icons.check_circle_outline,
-                      color: isDone ? Colors.green : Colors.grey[400],
-                      size: 20,
-                    ),
-                  ],
-                ),
-                Divider(),
-                Text(
-                  desc,
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                ),
-              ],
+    return InkWell( // Menggunakan InkWell agar ada feedback saat ditekan
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: 30, color: Colors.grey[600]),
+            const SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Icon(
+                        isDone ? Icons.check_circle : Icons.check_circle_outline,
+                        color: isDone ? Colors.green : Colors.grey[400],
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  Text(
+                    desc,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
